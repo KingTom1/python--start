@@ -3,15 +3,19 @@ from 开始游戏项目.settings import Settings
 from 开始游戏项目.ship import Ship
 import 开始游戏项目.game_functions as gf
 from pygame.sprite import Group
+from 开始游戏项目.alien import Alien
+
 def run_game():
     # 初始化游戏并创建一个屏幕对象
     pygame.init()
+    # 属性控制的对象
     ai_settings = Settings()
+    # 获取一个屏幕 对象
     screen = pygame.display.set_mode((ai_settings.screen_width,ai_settings.screen_height))
+    # 创建一个外星人
+    alien = Alien(ai_settings, screen)
 
     pygame.display.set_caption("Alien Invasion")
-    # 设置背景颜色
-    # bg_color = (230,230,230)
 
     # 创建飞船
     ship = Ship(screen, ai_settings)
@@ -27,9 +31,6 @@ def run_game():
         ship.update()
         gf.update_bullets(bullets)
         # 更新屏幕，刷新
-        gf.update_screen(ai_settings,screen,ship,bullets)
-
-
-
+        gf.update_screen(ai_settings,screen,ship,bullets,alien)
 
 run_game()

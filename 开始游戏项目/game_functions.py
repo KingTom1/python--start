@@ -31,15 +31,17 @@ def check_events(ai_settings,screen,ship,bullets):
             check_keyup_events(event, ship)
 
 
-def update_screen(ai_settings,screen,ship,bullets):
+def update_screen(ai_settings,screen,ship,bullets,alien):
     '''更新屏幕上的图像，并切换到新屏幕'''
     # 每次循环时都重绘屏幕
     screen.fill(ai_settings.bg_color)
-    # 在飞船和外星人后面重绘所有子弹
+    # 在飞船和外星人后面重绘所有子弹,子弹出现在屏幕
     for bullet in bullets.sprites():
         bullet.draw_bullet()
-    # 获得飞船在屏幕刷新
+    # 获得飞船在屏幕刷新，飞船出现在屏幕
     ship.blitme()
+    # 外星人出现在屏幕
+    alien.blitme()
     # 让最近绘制的屏幕可见
     pygame.display.flip()
 
