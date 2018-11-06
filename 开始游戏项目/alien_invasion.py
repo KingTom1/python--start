@@ -33,7 +33,7 @@ def run_game():
         gf.check_events(ai_settings,screen,ship,bullets)
         # 调用事件发生状态
         ship.update()
-        gf.update_bullets(bullets)
+        gf.update_bullets(bullets,aliens,ai_settings,screen,ship)
         gf.update_aliens(ai_settings,aliens)
         # 更新屏幕，刷新
         gf.update_screen(ai_settings,screen,ship,bullets,aliens)

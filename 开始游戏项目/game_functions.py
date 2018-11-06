@@ -45,13 +45,19 @@ def update_screen(ai_settings,screen,ship,bullets,aliens):
     # 让最近绘制的屏幕可见
     pygame.display.flip()
 
-def update_bullets(bullets):
+def update_bullets(bullets,aliens,ai_settings,screen,ship):
     # 创建子弹移动
     bullets.update()
     # 删除已消失的子弹
     for bullet in bullets.copy():
         if bullet.rect.bottom <= 0:
             bullets.remove(bullet)
+    # 检验是否有子弹击中外星人，通过方法sprite.groupcollide()比较
+    collisions = pygame.sprite.groupcollide(bullets,aliens,True,True)
+    if len(aliens) == 0:
+        # 删除现有的子弹并新建一群外星人
+        bullets.empty()
+        create_fleet(ai_settings,screen,ship,aliens)
 
 def fire_bullet(ai_settings,screen,ship,bullets):
     if len(bullets) < ai_settings.bullets_allowed:
@@ -65,8 +71,7 @@ def create_fleet(ai_settings,screen,aliens,ship):
     # 创建外星人群
     for row_number in range(number_rows):
         for alien_number in range(number_alien_x):
-            create_alien(ai_settings, screen, aliens, alien_number,row_number)
-
+            create_alien(ai_settings, screen, aliens, alien_number, row_number)
 
 def get_number_aliens_x(ai_settings,alien_width):
     available_space = ai_settings.screen_width - 2 * alien_width
