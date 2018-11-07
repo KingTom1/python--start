@@ -22,7 +22,7 @@ def check_keyup_events(event,ship):
         ship.moving_left = False
 
 
-def check_events(ai_settings,screen,ship,bullets,play_button,stats):
+def check_events(ai_settings,screen,ship,bullets,play_button,stats,aliens):
     '''响应按键和鼠标事件'''
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -33,11 +33,18 @@ def check_events(ai_settings,screen,ship,bullets,play_button,stats):
             check_keyup_events(event, ship)
         elif event.type == pygame.MOUSEBUTTONDOWN:
             mouse_x,mouse_y = pygame.mouse.get_pos()
-            check_play_button(stats,play_button,mouse_x,mouse_y)
+            check_play_button(stats,play_button,mouse_x,mouse_y,ai_settings,screen,ship,aliens,bullets)
 
-def check_play_button(stats,play_button,mouse_x,mouse_y):
+def check_play_button(stats,play_button,mouse_x,mouse_y,ai_settings,screen,ship,aliens,bullets):
+    '''假如鼠标点击'''
     if play_button.rect.collidepoint(mouse_x,mouse_y):
+        stats.reset_stats()
         stats.game_active = True
+        aliens.empty()
+        bullets.empty()
+        #创建一群新的外星人，并让飞船居中
+        create_fleet(ai_settings,screen,ship,aliens)
+        ship.center_ship()
 
 
 def update_screen(ai_settings,screen,stats,ship,bullets,aliens,play_button):
@@ -113,6 +120,7 @@ def ship_hit(ai_settings,stats,screen,ship,aliens,bullets):
         ship.center_ship()
     else:
         stats.game_active = False
+    print(stats.ships_left)
 
 def update_aliens(ai_settings,stats,screen,ship,aliens,bullets):
     check_fleet_edges(ai_settings,aliens)

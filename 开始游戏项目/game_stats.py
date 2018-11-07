@@ -6,7 +6,7 @@ class GameStats():
         self.reset_stats()
         '''游戏标识'''
         self.game_active = False
-
+    # 重置游戏统计信息
     def reset_stats(self):
         '''初始化在游戏运行期间可能变化的统计信息'''
         self.ships_left = self.ai_settings.ship_limit
