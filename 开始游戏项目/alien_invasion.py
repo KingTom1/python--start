@@ -6,13 +6,14 @@ from pygame.sprite import Group
 from 开始游戏项目.game_stats import GameStats
 from 开始游戏项目.button import Button
 
-def run_game():
+if __name__ == "__main__":
+
     # 初始化游戏并创建一个屏幕对象
     pygame.init()
     # 属性控制的对象
     ai_settings = Settings()
     # 获取一个屏幕 对象
-    screen = pygame.display.set_mode((ai_settings.screen_width,ai_settings.screen_height))
+    screen = pygame.display.set_mode((ai_settings.screen_width, ai_settings.screen_height))
 
     pygame.display.set_caption("Alien Invasion")
 
@@ -25,22 +26,20 @@ def run_game():
     bullets = Group()
     # 创建外星人群
     aliens = Group()
-    gf.create_fleet(ai_settings,screen,ship,aliens)
+    gf.create_fleet(ai_settings, screen, ship, aliens)
 
     # 创建绘制PLAY按钮
-    play_button = Button(ai_settings,screen,"Play")
+    play_button = Button(ai_settings, screen, "Play")
 
     # 开始游戏主循环
     while True:
         # 监视键盘和鼠标事件
-        gf.check_events(ai_settings,screen,ship,bullets,play_button,stats,aliens)
+        gf.check_events(ai_settings, screen, ship, bullets, play_button, stats, aliens)
 
         if stats.game_active:
             # 调用事件发生状态
             ship.update()
-            gf.update_bullets(bullets,aliens,ai_settings,screen,ship)
-            gf.update_aliens(ai_settings,stats,screen,ship,aliens,bullets)
+            gf.update_bullets(bullets, aliens, ai_settings, screen, ship)
+            gf.update_aliens(ai_settings, stats, screen, ship, aliens, bullets)
         # 更新屏幕，刷新
-        gf.update_screen(ai_settings,screen,stats,ship,bullets,aliens,play_button)
-
-run_game()
+        gf.update_screen(ai_settings, screen, stats, ship, bullets, aliens, play_button)
